@@ -12,7 +12,7 @@ setup(
     packages=find_packages(),  # Automatically find packages in the directory
     install_requires=[
         'onnx',  # Required for loading ONNX models
-        'onnxruntime',  # Required for ONNX runtime operations
+        'onnxruntime-gpu',  # Required for ONNX runtime operations
         'onnxruntime-tools',  # Required for quantization tools
         'onnxsim',  # Required for simplifying ONNX models
     ],
