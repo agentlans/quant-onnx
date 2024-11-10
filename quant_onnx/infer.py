@@ -65,7 +65,7 @@ class ONNXModel:
             torch.cuda.empty_cache()
 
 # Example usage:
-# inference_model = QuantizedModel("model_name_or_path")
+# inference_model = ONNXModel("model_name_or_path")
 # single_output = inference_model.generate("Your input text here.")
 # batch_output = inference_model.generate_batch(["Input text 1", "Input text 2"])
 # del inference_model  # Explicitly delete the model when done

@@ -1,6 +1,6 @@
 import quant_onnx
-from quant_onnx.infer import QuantizedModel
+from quant_onnx.infer import ONNXModel
 
-model = QuantizedModel("my-onnx-optimized-model")
-model.generate("Fly me to the moon.")
+model = ONNXModel("my-onnx-optimized-model")
+model.generate("Your prompt here.")
 
