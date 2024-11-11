@@ -5,6 +5,7 @@ from onnxruntime import SessionOptions, GraphOptimizationLevel
 import asyncio
 from functools import lru_cache
 import logging
+import gc
 
 class ONNXModel:
     def __init__(self, model_name_or_path):
@@ -50,28 +51,36 @@ class ONNXModel:
                 output_ids = self.model.generate(input_ids, attention_mask=attention_mask, max_length=max_length)
                 output_texts = self.tokenizer.batch_decode(output_ids, skip_special_tokens=True)
 
-            if self.device.type == "cuda":
-                torch.cuda.empty_cache()
+            self._clear_cuda_cache()
 
             return output_texts
         except Exception as e:
             self.logger.error(f"Error in generate: {str(e)}")
             raise
 
+    def _clear_cuda_cache(self):
+        if self.device.type == "cuda":
+            torch.cuda.empty_cache()
+
     def __enter__(self):
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
-        self.__del__()
+        self.cleanup()
 
-    def __del__(self):
+    def cleanup(self):
         try:
-            del self.model
-            del self.tokenizer
-            if self.device.type == "cuda":
-                torch.cuda.empty_cache()
+            if hasattr(self, 'model'):
+                del self.model
+            if hasattr(self, 'tokenizer'):
+                del self.tokenizer
+            self._clear_cuda_cache()
+            gc.collect()
         except Exception as e:
             self.logger.error(f"Error in cleanup: {str(e)}")
+
+    def __del__(self):
+        self.cleanup()
 
 # Example usage:
 # async def main():
