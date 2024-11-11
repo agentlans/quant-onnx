@@ -131,8 +131,7 @@ def copy_non_onnx_file(input_file_path: str, output_dir: str, filename: str) -> 
     shutil.copy2(input_file_path, output_file_copy_path)
     logging.info(f"Copied non-ONNX file to {output_file_copy_path}")
 
-# Main execution flow
-if __name__ == "__main__":
+def main():
     parser = argparse.ArgumentParser(description="Process ONNX models for preprocessing, quantization, and simplification.")
     parser.add_argument("input_dir", type=str, help="Path to the input directory containing ONNX models.")
     parser.add_argument("output_dir", type=str, help="Path to save the processed models and copied files.")
@@ -152,4 +151,7 @@ if __name__ == "__main__":
 
     # Process all files in the specified directory
     process_directory(args.input_dir, args.output_dir)
+
+if __name__ == "__main__":
+    main()
 

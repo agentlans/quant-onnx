@@ -32,10 +32,14 @@ def verify_onnx_model(model_dir):
         print(f"Error during verification: {str(e)}")
         sys.exit(1)
 
-if __name__ == "__main__":
+def main():
     if len(sys.argv) != 2:
         print("Usage: python verify_onnx_model.py <model_directory>")
         sys.exit(1)
 
     model_dir = sys.argv[1]
     verify_onnx_model(model_dir)
+
+if __name__ == "__main__":
+    main()
+
